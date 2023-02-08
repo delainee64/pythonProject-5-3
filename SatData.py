@@ -19,13 +19,22 @@ class SatData:
         sat_list = []
         for data in self._data:
             if data[8] in dbns:
-                sat_list.append(data[8:])
+                sat_list.append(data)
+        sat_list = sorted(sat_list, key=lambda x: x[8])
 
-        with open('output.csv', 'w') as outfile:
-            outfile.write(','.join(str(index) for index in data)+'\n')
-            for data in sat_list:
-                outfile.write(','.join(str(index) for index in data)+'\n')
-
+        with open('output.csv', 'a') as outfile:
+            label = [str(index) for index in range(len(sat_list[0]))]
+            outfile.write(','.join(label))
+            outfile.write('\n')
+            for row_info in sat_list:
+                row_data = []
+                for item in row_info:
+                    if ',' in str(item):
+                        row_data.append("\"" + item + "\"")
+                    else:
+                        row_data.append(str(item))
+                outfile.write(','.join(row_data))
+                outfile.write('\n')
         outfile.close()
 
 
