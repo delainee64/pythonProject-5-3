@@ -19,7 +19,7 @@ class SatData:
         sat_list = []
         for data in self._data:
             if data[8] in dbns:
-                sat_list.append(data[8:12])
+                sat_list.append(data[8:])
 
         with open('output.csv', 'w') as outfile:
             outfile.write(','.join(str(index) for index in data)+'\n')
